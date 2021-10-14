@@ -12,7 +12,7 @@ namespace Acrostic
         public const int GameHeight = 108;
         public const int CellSize = 12;
 
-        public App(int width = 192, int height = 108, bool isFullScreen = false, string windowTitle = "Camel", string contentDirectory = "Content")
+        public App(int width = 192, int height = 108, bool isFullScreen = false, string windowTitle = "Acrostic", string contentDirectory = "Content")
             : base(width, height, isFullScreen, windowTitle, contentDirectory)
         {
             Main = this;
@@ -43,7 +43,7 @@ namespace Acrostic
             Window.AllowUserResizing = true;
         }
 
-        private void SetFullscreen()
+        private void SetFullscreen() // unused atm
         {
             Screen.PreferredBackBufferWidth = Core.GraphicsDevice.Adapter.CurrentDisplayMode.Width;
             Screen.PreferredBackBufferHeight = Core.GraphicsDevice.Adapter.CurrentDisplayMode.Height;

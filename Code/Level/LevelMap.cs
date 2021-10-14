@@ -35,11 +35,6 @@ namespace Acrostic
             return (Values)Data[row, col];
         }
 
-        public int IntValueAt(int row, int col)
-        {
-            return Data[row, col];
-        }
-
         public void Add(Values val, int row, int col)
         {
             Data[row, col] = (int)val;
@@ -52,7 +47,7 @@ namespace Acrostic
 
         public bool Move(int row, int col, Vector2 direction)
         {
-            Values currentVal = ValueAt(row, col);
+            Values moveable = ValueAt(row, col);
 
             int moveY = row + (int)direction.Y;
             int moveX = col + (int)direction.X;
@@ -64,16 +59,18 @@ namespace Acrostic
                 return false;
             }
 
-            Values moveVal = ValueAt(moveY, moveX);
+            Values targetValue = ValueAt(moveY, moveX);
 
             // check for walls
             //
-            if (moveVal == Values.Wall)
+            if (targetValue == Values.Wall)
             {
                 return false;
             }
 
-            if (moveVal == Values.Box)
+            // if colliding with another moveable object, attempt to move that object in the same direction
+            //
+            if (targetValue == Values.Box)
             {
                 if (!Move(moveY, moveX, direction))
                 {
@@ -81,15 +78,19 @@ namespace Acrostic
                 }
             }
 
-            // finally, update map, move entity
+            // finally, update the map and move the entity
             //
             OgmoEntity entity = EntityAtCell(row, col);
             entity.TweenPositionTo(entity.Position + (direction * 12), 0.02f).Start();
             RemoveAt(row, col);
-            Add(currentVal, moveY, moveX);
-            DebugPrintMap();
+            Add(moveable, moveY, moveX);
+            //DebugPrintMap();
             return true;
+        }
 
+        private OgmoEntity EntityAtCell(int row, int col)
+        {
+            return Level.EntitiesOfType<OgmoEntity>().Find((obj) => obj.CellPosition().Y == row && obj.CellPosition().X == col);
         }
 
         private void DebugPrintMap()
@@ -129,9 +130,6 @@ namespace Acrostic
             }
         }
 
-        private OgmoEntity EntityAtCell(int row, int col)
-        {
-            return Level.EntitiesOfType<OgmoEntity>().Find((obj) => obj.CellPosition().Y == row && obj.CellPosition().X == col);
-        }
+
     }
 }

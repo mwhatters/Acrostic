@@ -16,6 +16,6 @@ https://user-images.githubusercontent.com/9030453/137402849-80717d9e-ef95-4fb4-8
 
 + For each entity added, their position is transformed into a relative cell position and added to the LevelMap object through the level map's API
 
-+ The LevelMap is responsible for moving objects and managing their relationships. Currently movement for all objects is handled via the `Move` function. This should make more complex map-wide functionality easier to implement (e.g. an undo function). There is no collision system in this game.
++ The LevelMap is responsible for moving objects and managing their relationships. Currently movement for all objects is handled via the `Move` function. When we detect player input, for instance, the player object calls to the level map to move itself. This should make more complex map-wide functionality easier to implement (e.g. an undo function). There is no collision system in this game.
 
 + Limitations include more complex behaviors, including objects that span multiple tiles. This system is very eary in development and refactors are likely.

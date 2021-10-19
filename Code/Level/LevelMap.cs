@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Nez;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using Nez.Tweens;
 
 namespace Acrostic
 {

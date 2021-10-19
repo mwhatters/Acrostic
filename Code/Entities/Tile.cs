@@ -54,11 +54,10 @@ namespace Acrostic
             if (currentRow != Position.Y)
             {
                 currentRow = Position.Y;
+                return;
             }
-            else
-            {
-                bgId = bgId == 1 ? 2 : 1;
-            }
+
+            bgId = bgId == 1 ? 2 : 1;
         }
     }
 }

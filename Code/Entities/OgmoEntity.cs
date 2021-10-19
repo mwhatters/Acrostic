@@ -21,7 +21,7 @@ namespace Acrostic
         public Collider HitBox;
         public List<Node> Nodes;
         public Node OriginNode;
-        public int Value;
+        public LevelMap.Values Value;
 
         // references
         internal Level level;
@@ -38,7 +38,6 @@ namespace Acrostic
             Transform.Rotation = data.rotation;
             RotationInDegrees = (int)(Transform.Rotation * (180f / Math.PI));
             Nodes = new List<Node>();
-            Value = (int)Data.values["value"];
         }
 
         public override void OnAddedToScene()
@@ -49,7 +48,7 @@ namespace Acrostic
             int row = point.Y;
             int col = point.X;
             level = (Scene as Level);
-            level.Map.Add((LevelMap.Values)Value, row, col);
+            level.Map.Add(Value, row, col);
 
             OriginNode = AddComponent(new Node(new Vector2(Data.x, Data.y)));
             if (Data.nodes != null)

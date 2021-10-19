@@ -10,11 +10,22 @@ namespace Acrostic
 {
     class Box : OgmoEntity
     {
+        public enum ConnectorType
+        {
+            CornerBL,
+            CornerTL,
+            CornerBR,
+            CornerTR
+        }
+
         // components
         private SpriteRenderer sprite;
+        private ConnectorType Connector;
 
         public Box(EntityData data) : base(data)
         {
+            Value = LevelMap.Values.Box;
+            Connector = Calc.ETS<ConnectorType>((string)data.values["connectorType"]);
         }
 
         public override void OnAddedToScene()
@@ -25,11 +36,24 @@ namespace Acrostic
 
         private void LoadSprite()
         {
-            Texture2D texture = Scene.Content.LoadTexture("Graphics/entities/box");
-            sprite = new SpriteRenderer(texture);
+            sprite = new SpriteRenderer(GetTexture());
             sprite.SetOrigin(Vector2.Zero);
             sprite.SetRenderLayer(RenderLayers.MGObject);
             AddComponent(sprite);
+        }
+
+        private Texture2D GetTexture()
+        {
+            string type = Connector switch
+            {
+                ConnectorType.CornerBL => "cornerbl",
+                ConnectorType.CornerTL => "cornertl",
+                ConnectorType.CornerBR => "cornerbr",
+                ConnectorType.CornerTR => "cornertr",
+                _ => "box"
+            };
+
+            return Scene.Content.LoadTexture("Graphics/entities/connectors/" + type);
         }
 
     }

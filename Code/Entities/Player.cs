@@ -17,6 +17,7 @@ namespace Acrostic
 
         public Player(EntityData data) : base(data)
         {
+            Value = LevelMap.Values.Player;
         }
 
         public override void OnAddedToScene()

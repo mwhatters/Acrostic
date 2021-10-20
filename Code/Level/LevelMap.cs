@@ -43,8 +43,10 @@ namespace Acrostic
 
         public bool Move(int row, int col, Vector2 direction)
         {
-            Values moveable = ValueAt(row, col);
+            BeforeMove();
+            OgmoEntity entity = EntityAtCell(row, col);
 
+            Values moveable = ValueAt(row, col);
             int moveY = row + (int)direction.Y;
             int moveX = col + (int)direction.X;
 
@@ -76,15 +78,31 @@ namespace Acrostic
 
             // finally, update the map and move the entity
             //
-            OgmoEntity entity = EntityAtCell(row, col);
             entity.TweenPositionTo(entity.Position + (direction * 12), 0.02f).Start();
             RemoveAt(row, col);
             Add(moveable, moveY, moveX);
-            //DebugPrintMap();
+
+            AfterMove();
             return true;
         }
 
-        private OgmoEntity EntityAtCell(int row, int col)
+        private void BeforeMove()
+        {
+            foreach (OgmoEntity ent in Level.EntitiesOfType<OgmoEntity>())
+            {
+                ent.BeforeMove();
+            }
+        }
+
+        private void AfterMove()
+        {
+            foreach (OgmoEntity ent in Level.EntitiesOfType<OgmoEntity>())
+            {
+                ent.AfterMove();
+            }
+        }
+
+        public OgmoEntity EntityAtCell(int row, int col)
         {
             return Level.EntitiesOfType<OgmoEntity>().Find((obj) => obj.CellPosition().Y == row && obj.CellPosition().X == col);
         }

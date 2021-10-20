@@ -25,6 +25,7 @@ namespace Acrostic
 
         // references
         internal Level level;
+        internal LevelMap levelMap;
 
         public OgmoEntity(EntityData data)
         {
@@ -48,7 +49,8 @@ namespace Acrostic
             int row = point.Y;
             int col = point.X;
             level = (Scene as Level);
-            level.Map.Add(Value, row, col);
+            levelMap = level.Map;
+            levelMap.Add(Value, row, col);
 
             OriginNode = AddComponent(new Node(new Vector2(Data.x, Data.y)));
             if (Data.nodes != null)
@@ -69,6 +71,8 @@ namespace Acrostic
         }
 
         public virtual void Awake() { }
+        internal virtual void AfterMove() { }
+        internal virtual void BeforeMove() { }
 
         internal Point CellPosition()
         {

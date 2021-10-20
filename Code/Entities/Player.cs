@@ -101,7 +101,8 @@ namespace Acrostic
 
         private void Move(Vector2 direction)
         {
-            level.Map.Move(CellPosition().Y, CellPosition().X, direction);
+            Point cp = CellPosition();
+            level.Map.Move(cp.Y, cp.X, direction);
         }
     }
 }
